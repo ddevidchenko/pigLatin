@@ -7,19 +7,18 @@ import dmde.transformers.AddWayTransformer;
 import dmde.transformers.MoveFirstLatterToEndTransformer;
 import dmde.transformers.WordTransformer;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class PigLatinTextConverter {
 
-    private final List<WordTransformer> wordTransformers = new LinkedList<>();
+    private final List<WordTransformer> wordTransformers;
 
     public PigLatinTextConverter() {
-        initWordTransformers();
-    }
-
-    private void initWordTransformers() {
-        wordTransformers.add(new AddWayTransformer(new StartsWithVowelRule(), new NotEndsWithWayRule()));
-        wordTransformers.add(new MoveFirstLatterToEndTransformer(new StartsWithConsonantRule(), new NotEndsWithWayRule()));
+        wordTransformers = List.of(new AddWayTransformer(new StartsWithVowelRule(), new NotEndsWithWayRule()),
+                new MoveFirstLatterToEndTransformer(new StartsWithConsonantRule(), new NotEndsWithWayRule()));
     }
 
     public String convert(String text) {
